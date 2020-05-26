@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Covid</string>
+    <string name="title_dynamic_feature_test">TestModule</string>
+</resources>

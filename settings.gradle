@@ -1,0 +1,8 @@
+rootProject.name='Covid'
+
+include ':app'
+include ':lib-util'
+include ':lib-base'
+include ':lib-deepdive'
+include ':lib-home'
+include ':lib-covid-news'
