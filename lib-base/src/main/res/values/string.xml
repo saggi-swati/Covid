@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_home">Home</string>
+    <string name="title_deep_dive">Deep Dive</string>
+    <string name="title_about_covid">About Covid</string>
+    <string name="total_cases_header">TOTAL CASES</string>
+    <string name="total_recovered_header">Recovered</string>
+    <string name="total_deceased_header">Deceased</string>
+    <string name="total_active_header">Active</string>
+    <string name="total_mild_header">Mild</string>
+    <string name="total_serious_header">Serious</string>
+    <string name="active_cases">ACTIVE CASES</string>
+    <string name="closed_cases">CLOSED CASES</string>
+    <string name="currently_infected_patients">Currently Infected Patients</string>
+    <string name="cases_which_had_an_outcome">Cases which had an outcome</string>
+    <string name="last_updated">last updated:</string>
+    <string name="search_country_hint">Search Country</string>
+    <string name="country_flag_desc">Showing flags for country</string>
+    <string name="active">Active</string>
+    <string name="item_title" formatted="false">%s posted %s</string>
+
+</resources>
