@@ -6,11 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.covid.covidnews.R;
-import com.android.covid.covidnews.databinding.CovidNewsBinding;
 import com.android.covid.covidnews.ui.adapter.NewsAdapter;
 import com.android.covid.covidnews.ui.viewmodel.NewsViewModel;
 import com.android.covid.ui.BaseFragment;
@@ -19,7 +18,8 @@ public class CovidNewsFragment extends BaseFragment {
 
     private NewsAdapter adapter;
     private NewsViewModel newsViewModel;
-    private CovidNewsBinding binding;
+
+    private View parent;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -27,17 +27,17 @@ public class CovidNewsFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         observeViewModel();
-        return binding.getRoot();
+        return parent;
     }
 
     @Override
     protected void initViews(@NonNull LayoutInflater inflater,
                              ViewGroup container) {
-        binding = DataBindingUtil.inflate(inflater,
-                R.layout.fragment_covid_news, container, false);
-        binding.listFeed.setLayoutManager(new LinearLayoutManager(getContext().getApplicationContext()));
+        parent = inflater.inflate(R.layout.fragment_covid_news, container, false);
+        RecyclerView newsFeedRecyclerView = parent.findViewById(R.id.list_feed);
+        newsFeedRecyclerView.setLayoutManager(new LinearLayoutManager(getContext().getApplicationContext()));
         adapter = new NewsAdapter(getContext().getApplicationContext());
-        binding.listFeed.setAdapter(adapter);
+        newsFeedRecyclerView.setAdapter(adapter);
     }
 
     @Override
