@@ -14,8 +14,13 @@ public class RetrofitFactory {
     }
 
     @NonNull
-    public static <T> T buildCovidService(@NonNull Class<T> service) {
-        return buildService(service, BaseConstants.COVID_BASE_URL);
+    public static <T> T buildGlobalStatsService(@NonNull Class<T> service) {
+        return buildService(service, BaseConstants.COVID_HOME_GLOBAL_BASE_URL);
+    }
+
+    @NonNull
+    public static <T> T buildDeepDiveService(@NonNull Class<T> service) {
+        return buildService(service, BaseConstants.COVID_DEEP_DIVE_BASE_URL);
     }
 
     @NonNull

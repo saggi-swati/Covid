@@ -1,6 +1,8 @@
 package com.android.covid.deepdive.ui;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,26 +15,27 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.android.covid.deepdive.R;
+import com.android.covid.deepdive.data.NovelCovid;
 import com.android.covid.deepdive.databinding.DeepDiveFragmentBinding;
 import com.android.covid.deepdive.ui.adapter.DeepDiveAdapter;
-import com.android.covid.deepdive.ui.viewmodel.DeepDiveViewModel;
-import com.android.covid.model.Country;
+import com.android.covid.deepdive.ui.adapter.NovelCovidAdapter;
+import com.android.covid.deepdive.ui.viewmodel.NovelCovidViewModel;
 import com.android.covid.ui.BaseFragment;
-import com.android.covid.ui.viewmodel.CountryViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DeepDiveFragment extends BaseFragment implements DeepDiveAdapter.ItemClickListener {
 
-    private DeepDiveAdapter mAdapter;
+    private NovelCovidAdapter mAdapter;
 
-    private DeepDiveViewModel deepDiveViewModel;
-    private CountryViewModel countryDataViewModel;
+    private NovelCovidViewModel deepDiveViewModel;
 
     private DeepDiveFragmentBinding binding;
 
     private List<String> mCountryList = new ArrayList<>();
+
+    private List<NovelCovid> novelCovids = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container,
@@ -51,41 +54,65 @@ public class DeepDiveFragment extends BaseFragment implements DeepDiveAdapter.It
                 android.R.layout.simple_dropdown_item_1line, android.R.id.text1, mCountryList);
 
         binding.searchEt.setAdapter(adapter);
-        binding.searchEt.setOnItemClickListener((parent, view, position, id) -> {
-            onItemClick(parent.getAdapter().getItem(position).toString());
-            System.out.println(parent.getAdapter().getItem(position));
+
+        binding.searchEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // TODO
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // TODO
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s == null || s.length() == 0)
+                    mAdapter.setDataSet(novelCovids);
+
+                if (s != null && s.length() >= 3) {
+                    mAdapter.setDataSet(filter(novelCovids, s.toString()));
+                }
+            }
         });
 
         observeViewModel();
+    }
+
+    private static List<NovelCovid> filter(List<NovelCovid> models, String query) {
+        final String lowerCaseQuery = query.toLowerCase();
+
+        final List<NovelCovid> filteredModelList = new ArrayList<>();
+        for (NovelCovid model : models) {
+            final String text = model.countryName.toLowerCase();
+            if (text.startsWith(lowerCaseQuery)) {
+                filteredModelList.add(model);
+            }
+        }
+        return filteredModelList;
     }
 
     private void setUpRecyclerView() {
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         binding.covidCountryList.setLayoutManager(mLayoutManager);
-        mAdapter = new DeepDiveAdapter();
-        mAdapter.setItemClickListener(this);
+        mAdapter = new NovelCovidAdapter();
         binding.covidCountryList.setAdapter(mAdapter);
     }
 
     @Override
     protected void initViewModel() {
-        deepDiveViewModel = ViewModelProviders.of(this).get(DeepDiveViewModel.class);
-        countryDataViewModel = ViewModelProviders.of(this).get(CountryViewModel.class);
+        deepDiveViewModel = ViewModelProviders.of(this).get(NovelCovidViewModel.class);
     }
 
     private void observeViewModel() {
-        deepDiveViewModel.getAllCountryData().observe(getViewLifecycleOwner(), covidCountrySearch -> {
-            mAdapter.submitList(covidCountrySearch);
-        });
-
-        deepDiveViewModel.getNetworkState().observe(getViewLifecycleOwner(), networkState -> {
-            mAdapter.setNetworkState(networkState);
-        });
-
-        countryDataViewModel.getCountryList().observe(getViewLifecycleOwner(), countryList -> {
-            for (Country info :
-                    countryList) {
+        deepDiveViewModel.getNovelCovidAllCountryData().observe(getViewLifecycleOwner(), covidCountrySearch -> {
+            novelCovids.clear();
+            novelCovids.addAll(covidCountrySearch);
+            mAdapter.setDataSet(novelCovids);
+            for (NovelCovid info :
+                    covidCountrySearch) {
                 mCountryList.add(info.countryName);
             }
         });
@@ -94,10 +121,6 @@ public class DeepDiveFragment extends BaseFragment implements DeepDiveAdapter.It
     @Override
     public void onItemClick(String countryName) {
 
-       /* FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.nav_host_fragment, CountryDetailFragment.getInstance(countryName), CountryDetailFragment.class.getSimpleName());
-        ft.addToBackStack(null);
-        ft.commit();*/
     }
 
     @Override

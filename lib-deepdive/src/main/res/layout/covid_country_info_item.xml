@@ -21,12 +21,14 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="4dp"
+                android:textColor="@color/colorPrimary"
                 android:gravity="center"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/total_cases_tv_divider"
+                android:layout_centerHorizontal="true"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_below="@id/country_name"
