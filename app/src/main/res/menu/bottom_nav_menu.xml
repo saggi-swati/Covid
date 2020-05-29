@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/title_home" />
+
+    <item
+        android:id="@+id/navigation_deep_dive"
+        android:icon="@drawable/ic_deepdive_black_24dp"
+        android:title="@string/title_deep_dive" />
+
+    <item
+        android:id="@+id/navigation_notifications"
+        android:icon="@drawable/ic_news_black_24dp"
+        android:title="@string/title_about_covid" />
+
+</menu>
