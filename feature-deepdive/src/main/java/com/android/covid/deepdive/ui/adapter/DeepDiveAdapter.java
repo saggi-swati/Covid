@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.covid.deepdive.R;
 import com.android.covid.deepdive.data.CovidCountryInfo;
-import com.android.covid.deepdive.databinding.CountryDetailItemBinding;
 import com.android.covid.network.NetworkState;
 
 import java.util.Objects;
@@ -37,20 +36,17 @@ public class DeepDiveAdapter extends PagedListAdapter<CovidCountryInfo, Recycler
             return new NetworkStateItemViewHolder(v);
 
         } else {
-            CountryDetailItemBinding itemBinding = CountryDetailItemBinding.inflate(layoutInflater, parent, false);
-            return new CovidItemViewHolder(itemBinding);
+            View v = layoutInflater.inflate(R.layout.covid_country_info_item, parent, false);
+            return new CovidItemViewHolder(v);
         }
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof CovidItemViewHolder) {
+
             ((CovidItemViewHolder) holder).bindTo(Objects.requireNonNull(getItem(position)));
 
-            ((CovidItemViewHolder) holder).binding.getRoot().setOnClickListener(v -> {
-                if (onItemClickListener != null)
-                    onItemClickListener.onItemClick(Objects.requireNonNull(getItem(position)).countryName);
-            });
         } else {
             ((NetworkStateItemViewHolder) holder).bindView(networkState);
         }
@@ -89,29 +85,41 @@ public class DeepDiveAdapter extends PagedListAdapter<CovidCountryInfo, Recycler
 
     public static class CovidItemViewHolder extends RecyclerView.ViewHolder {
 
-        private CountryDetailItemBinding binding;
+        private TextView countryName;
+        private TextView totalCasesValTv;
+        private TextView totalCasesNewValTv;
+        private TextView totalCasesActiveValTv;
+        private TextView totalCasesDeceasedValTv;
+        private TextView totalCasesDeceasedNewValTv;
+        private TextView totalCasesRecoveredValTv;
 
-        CovidItemViewHolder(CountryDetailItemBinding binding) {
-            super(binding.getRoot());
-            this.binding = binding;
+        CovidItemViewHolder(View view) {
+            super(view);
+
+            countryName = view.findViewById(R.id.country_name);
+            totalCasesValTv = view.findViewById(R.id.total_cases_val_tv);
+            totalCasesNewValTv = view.findViewById(R.id.total_cases_new_val_tv);
+            totalCasesActiveValTv = view.findViewById(R.id.total_cases_active_val_tv);
+            totalCasesDeceasedValTv = view.findViewById(R.id.total_cases_deceased_val_tv);
+            totalCasesDeceasedNewValTv = view.findViewById(R.id.total_cases_deceased_new_val_tv);
+            totalCasesRecoveredValTv = view.findViewById(R.id.total_cases_recovered_val_tv);
         }
 
         void bindTo(CovidCountryInfo item) {
 
-
-            binding.countryName
+            countryName
                     .setText(item.countryName);
-            binding.totalCasesValTv
+            totalCasesValTv
                     .setText(item.totalCases);
-            binding.totalCasesNewValTv
+            totalCasesNewValTv
                     .setText(item.newCases);
-            binding.totalCasesActiveValTv
+            totalCasesActiveValTv
                     .setText(item.activeCases);
-            binding.totalCasesDeceasedValTv
+            totalCasesDeceasedValTv
                     .setText(item.totalDeaths);
-            binding.totalCasesDeceasedNewValTv
+            totalCasesDeceasedNewValTv
                     .setText(item.newDeaths);
-            binding.totalCasesRecoveredValTv
+            totalCasesRecoveredValTv
                     .setText(item.totalRecovered);
         }
     }
