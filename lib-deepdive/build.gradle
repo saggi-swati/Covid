@@ -88,6 +88,7 @@ dependencies {
     testImplementation "androidx.room:room-testing:$room_version"
 
     implementation project(':lib-base')
+    implementation project(path: ':lib-util')
 }
 
 

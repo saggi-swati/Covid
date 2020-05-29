@@ -31,7 +31,7 @@ public abstract class BaseFragment extends Fragment {
         requireActivity().setTitle(getTitle());
     }
 
-    protected abstract void initViews(@NonNull LayoutInflater inflater, @Nullable ViewGroup container);
+    protected abstract void initViews(@Nullable LayoutInflater inflater, @Nullable ViewGroup container);
 
     protected abstract void initViewModel();
 

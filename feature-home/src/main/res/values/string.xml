@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_home">Home</string>
+    <string name="affecting_format_string">Affecting</string>
+    <string name="total_affected_countries" formatted="false">Affecting %s countries</string>
+</resources>

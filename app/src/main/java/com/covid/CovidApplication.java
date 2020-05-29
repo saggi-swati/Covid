@@ -1,10 +1,9 @@
 package com.covid;
 
 import android.app.Application;
-import android.content.Context;
-import android.os.Handler;
 
-import androidx.annotation.NonNull;
+import com.android.covid.home.HomeModule;
+import com.covid.dependencies.home.HomeDependenciesImpl;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -14,32 +13,20 @@ public class CovidApplication extends Application {
 
     OkHttpClient.Builder builder;
 
-    private static volatile CovidApplication instance;
-    private static Handler mainHandler;
+    private static volatile CovidApplication sInstance;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        sInstance = this;
         buildHttpClient();
         init();
     }
 
-    private static CovidApplication get(Context context) {
-        return instance = (CovidApplication) context.getApplicationContext();
+    public static CovidApplication get() {
+        return sInstance;
     }
 
-    public static CovidApplication create(Context context) {
-        return get(context);
-    }
-
-    @NonNull
-    public static Handler getMainHandler() {
-        if (mainHandler == null) {
-            mainHandler = new Handler(instance.getMainLooper());
-        }
-
-        return mainHandler;
-    }
 
     public void buildHttpClient() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
@@ -51,6 +38,6 @@ public class CovidApplication extends Application {
     }
 
     private static void init() {
-        // initialize modules like A/B test, Firebase etc.
+        HomeModule.init(new HomeDependenciesImpl());
     }
 }

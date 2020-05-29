@@ -34,7 +34,7 @@ public class CovidDataSource extends PageKeyedDataSource<Long, CovidCountryInfo>
     CovidDataSource() {
 
         if (api == null) {
-            api = RetrofitFactory.buildCovidService(CovidAllCountryService.class);
+            api = RetrofitFactory.buildDeepDiveService(CovidAllCountryService.class);
         }
 
         networkState = new MutableLiveData<>();

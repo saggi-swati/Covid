@@ -1,9 +1,11 @@
 package com.covid.util;
 
-import org.jetbrains.annotations.NotNull;
-
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -27,15 +29,25 @@ public class CovidUtil {
         return date != null ? df.format(date) : null;
     }
 
+    public static String longToDateFormat(long milliSeconds) {
 
-    @NotNull
-    public static String formatPercentString(String closedCasesDeathPercentage) {
-        return String.format("%s%s",
-                closedCasesDeathPercentage, "%");
+        DateFormat formatter = new SimpleDateFormat("MMM, dd yyyy, HH:mm", Locale.ENGLISH);
+
+        System.out.println(milliSeconds);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(milliSeconds);
+
+        return formatter.format(calendar.getTime());
     }
 
-    public static long getRandomNumber() {
-        long x = (long) ((Math.random() * ((100000 - 0) + 1)) + 0);
-        return x;
+    public static String formatNumberText(long val) {
+        return NumberFormat.getInstance().format(val);
+    }
+
+    public static String formatPercent(double val, double total) {
+        double percent = (val * 100) / total;
+        return String.format("%s%s",
+                new DecimalFormat("##.00").format(percent), "%");
     }
 }
