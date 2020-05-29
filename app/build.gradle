@@ -94,7 +94,7 @@ dependencies {
     implementation project(':lib-util')
     implementation project(':feature-base')
     implementation project(':feature-home')
-    implementation project(':lib-covid-news')
+    implementation project(':feature-covid-news')
     implementation project(':lib-deepdive')
 
 

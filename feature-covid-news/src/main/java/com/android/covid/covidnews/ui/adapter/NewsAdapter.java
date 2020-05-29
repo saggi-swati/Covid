@@ -7,6 +7,7 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -16,7 +17,6 @@ import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.covid.covidnews.R;
-import com.android.covid.covidnews.databinding.CovidNewsItemBinding;
 import com.android.covid.covidnews.model.Article;
 import com.android.covid.network.NetworkState;
 import com.squareup.picasso.Picasso;
@@ -43,8 +43,8 @@ public class NewsAdapter extends PagedListAdapter<Article, RecyclerView.ViewHold
             return new NetworkStateItemViewHolder(v);
 
         } else {
-            CovidNewsItemBinding itemBinding = CovidNewsItemBinding.inflate(layoutInflater, parent, false);
-            return new ArticleItemViewHolder(itemBinding);
+            View v = layoutInflater.inflate(R.layout.covid_news_item, parent, false);
+            return new ArticleItemViewHolder(v);
         }
     }
 
@@ -87,14 +87,19 @@ public class NewsAdapter extends PagedListAdapter<Article, RecyclerView.ViewHold
         }
     }
 
-
     public class ArticleItemViewHolder extends RecyclerView.ViewHolder {
 
-        private CovidNewsItemBinding binding;
+        private ImageView newsItemImage;
+        private TextView newsItemDesc;
+        private TextView newsItemDatePosted;
+        private TextView newsItemTitle;
 
-        ArticleItemViewHolder(CovidNewsItemBinding binding) {
-            super(binding.getRoot());
-            this.binding = binding;
+        ArticleItemViewHolder(View view) {
+            super(view);
+            newsItemTitle = view.findViewById(R.id.news_item_title);
+            newsItemDatePosted = view.findViewById(R.id.news_item_date_posted);
+            newsItemDesc = view.findViewById(R.id.news_item_desc);
+            newsItemImage = view.findViewById(R.id.news_item_image);
         }
 
         void bindTo(Article article) {
@@ -105,10 +110,10 @@ public class NewsAdapter extends PagedListAdapter<Article, RecyclerView.ViewHold
             spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context.getApplicationContext(), R.color.secondary_text)),
                     titleString.lastIndexOf(author) + author.length() + 1, titleString.lastIndexOf(article.getTitle()) - 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-            binding.newsItemTitle.setText(spannableString);
-            binding.newsItemDatePosted.setText(article.getPublishedAt());
-            binding.newsItemDesc.setText(article.getDescription());
-            Picasso.get().load(article.getUrlToImage()).into(binding.newsItemImage);
+            newsItemTitle.setText(spannableString);
+            newsItemDatePosted.setText(article.getPublishedAt());
+            newsItemDesc.setText(article.getDescription());
+            Picasso.get().load(article.getUrlToImage()).into(newsItemImage);
         }
     }
 
