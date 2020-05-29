@@ -7,17 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.covid.deepdive.R;
 import com.android.covid.deepdive.data.NovelCovid;
-import com.android.covid.deepdive.databinding.DeepDiveFragmentBinding;
-import com.android.covid.deepdive.ui.adapter.DeepDiveAdapter;
 import com.android.covid.deepdive.ui.adapter.NovelCovidAdapter;
 import com.android.covid.deepdive.ui.viewmodel.NovelCovidViewModel;
 import com.android.covid.ui.BaseFragment;
@@ -25,37 +24,36 @@ import com.android.covid.ui.BaseFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeepDiveFragment extends BaseFragment implements DeepDiveAdapter.ItemClickListener {
+public class DeepDiveFragment extends BaseFragment implements NovelCovidAdapter.ItemClickListener {
 
     private NovelCovidAdapter mAdapter;
 
-    private NovelCovidViewModel deepDiveViewModel;
+    private NovelCovidViewModel novelCovidViewModel;
 
-    private DeepDiveFragmentBinding binding;
+    private View parent;
 
     private List<String> mCountryList = new ArrayList<>();
-
     private List<NovelCovid> novelCovids = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return binding.getRoot();
+        return parent;
     }
 
     @Override
     protected void initViews(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
-        binding = DataBindingUtil.inflate(inflater,
-                R.layout.covid_deep_dive_fragment, container, false);
+        parent = inflater.inflate(R.layout.covid_deep_dive_fragment, container, false);
 
         setUpRecyclerView();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_dropdown_item_1line, android.R.id.text1, mCountryList);
 
-        binding.searchEt.setAdapter(adapter);
+        AutoCompleteTextView searchEt = parent.findViewById(R.id.search_et);
+        searchEt.setAdapter(adapter);
 
-        binding.searchEt.addTextChangedListener(new TextWatcher() {
+        searchEt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 // TODO
@@ -96,18 +94,19 @@ public class DeepDiveFragment extends BaseFragment implements DeepDiveAdapter.It
     private void setUpRecyclerView() {
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        binding.covidCountryList.setLayoutManager(mLayoutManager);
+        RecyclerView covidCountryRecyclerView = parent.findViewById(R.id.covid_country_list);
+        covidCountryRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new NovelCovidAdapter();
-        binding.covidCountryList.setAdapter(mAdapter);
+        covidCountryRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
     protected void initViewModel() {
-        deepDiveViewModel = ViewModelProviders.of(this).get(NovelCovidViewModel.class);
+        novelCovidViewModel = ViewModelProviders.of(this).get(NovelCovidViewModel.class);
     }
 
     private void observeViewModel() {
-        deepDiveViewModel.getNovelCovidAllCountryData().observe(getViewLifecycleOwner(), covidCountrySearch -> {
+        novelCovidViewModel.getNovelCovidAllCountryData().observe(getViewLifecycleOwner(), covidCountrySearch -> {
             novelCovids.clear();
             novelCovids.addAll(covidCountrySearch);
             mAdapter.setDataSet(novelCovids);
