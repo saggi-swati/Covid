@@ -7,6 +7,8 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -16,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.covid.covidnews.R;
 import com.android.covid.covidnews.databinding.CovidNewsItemBinding;
 import com.android.covid.covidnews.model.Article;
-import com.android.covid.databinding.NetworkItemBinding;
 import com.android.covid.network.NetworkState;
 import com.squareup.picasso.Picasso;
 
@@ -38,8 +39,8 @@ public class NewsAdapter extends PagedListAdapter<Article, RecyclerView.ViewHold
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         if (viewType == TYPE_PROGRESS) {
-            NetworkItemBinding headerBinding = NetworkItemBinding.inflate(layoutInflater, parent, false);
-            return new NetworkStateItemViewHolder(headerBinding);
+            View v = layoutInflater.inflate(R.layout.item_network_state, parent, false);
+            return new NetworkStateItemViewHolder(v);
 
         } else {
             CovidNewsItemBinding itemBinding = CovidNewsItemBinding.inflate(layoutInflater, parent, false);
@@ -113,25 +114,27 @@ public class NewsAdapter extends PagedListAdapter<Article, RecyclerView.ViewHold
 
     public static class NetworkStateItemViewHolder extends RecyclerView.ViewHolder {
 
-        private NetworkItemBinding binding;
+        private ProgressBar progressBar;
+        private TextView errorMsg;
 
-        NetworkStateItemViewHolder(NetworkItemBinding binding) {
-            super(binding.getRoot());
-            this.binding = binding;
+        NetworkStateItemViewHolder(View view) {
+            super(view);
+            progressBar = view.findViewById(R.id.progress_bar);
+            errorMsg = view.findViewById(R.id.error_msg);
         }
 
         void bindView(NetworkState networkState) {
             if (networkState != null && networkState.getStatus() == NetworkState.Status.RUNNING) {
-                binding.progressBar.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.VISIBLE);
             } else {
-                binding.progressBar.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
             }
 
             if (networkState != null && networkState.getStatus() == NetworkState.Status.FAILED) {
-                binding.errorMsg.setVisibility(View.VISIBLE);
-                binding.errorMsg.setText(networkState.getMsg());
+                errorMsg.setVisibility(View.VISIBLE);
+                errorMsg.setText(networkState.getMsg());
             } else {
-                binding.errorMsg.setVisibility(View.GONE);
+                errorMsg.setVisibility(View.GONE);
             }
         }
     }

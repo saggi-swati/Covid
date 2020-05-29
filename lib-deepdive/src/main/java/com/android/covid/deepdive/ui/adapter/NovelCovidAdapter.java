@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.covid.deepdive.data.NovelCovid;
 import com.android.covid.deepdive.databinding.CountryDetailItemBinding;
 import com.covid.util.CovidUtil;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 import java.util.Objects;
@@ -47,6 +48,8 @@ public class NovelCovidAdapter extends RecyclerView.Adapter<NovelCovidAdapter.No
         }
 
         void bindTo(NovelCovid item) {
+
+            Picasso.get().load(item.countryInfo.countryFlag).resize(48,48).into(binding.countryFlag);
             binding.countryName
                     .setText(item.countryName);
             binding.totalCasesValTv

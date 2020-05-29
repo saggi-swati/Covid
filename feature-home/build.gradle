@@ -81,6 +81,6 @@ dependencies {
     // Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
 
-    implementation project(':lib-base')
+    implementation project(':feature-base')
     implementation project(':lib-util')
 }

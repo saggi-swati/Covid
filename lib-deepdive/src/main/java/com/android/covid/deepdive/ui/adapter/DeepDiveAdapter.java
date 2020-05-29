@@ -3,12 +3,14 @@ package com.android.covid.deepdive.ui.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.covid.databinding.NetworkItemBinding;
+import com.android.covid.deepdive.R;
 import com.android.covid.deepdive.data.CovidCountryInfo;
 import com.android.covid.deepdive.databinding.CountryDetailItemBinding;
 import com.android.covid.network.NetworkState;
@@ -31,8 +33,8 @@ public class DeepDiveAdapter extends PagedListAdapter<CovidCountryInfo, Recycler
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         if (viewType == TYPE_PROGRESS) {
-            NetworkItemBinding headerBinding = NetworkItemBinding.inflate(layoutInflater, parent, false);
-            return new NetworkStateItemViewHolder(headerBinding);
+            View v = layoutInflater.inflate(R.layout.item_network_state, parent, false);
+            return new NetworkStateItemViewHolder(v);
 
         } else {
             CountryDetailItemBinding itemBinding = CountryDetailItemBinding.inflate(layoutInflater, parent, false);
@@ -96,6 +98,7 @@ public class DeepDiveAdapter extends PagedListAdapter<CovidCountryInfo, Recycler
 
         void bindTo(CovidCountryInfo item) {
 
+
             binding.countryName
                     .setText(item.countryName);
             binding.totalCasesValTv
@@ -115,25 +118,27 @@ public class DeepDiveAdapter extends PagedListAdapter<CovidCountryInfo, Recycler
 
     public static class NetworkStateItemViewHolder extends RecyclerView.ViewHolder {
 
-        private NetworkItemBinding binding;
+        private ProgressBar progressBar;
+        private TextView errorMsg;
 
-        NetworkStateItemViewHolder(NetworkItemBinding binding) {
-            super(binding.getRoot());
-            this.binding = binding;
+        NetworkStateItemViewHolder(View view) {
+            super(view);
+            progressBar = view.findViewById(R.id.progress_bar);
+            errorMsg = view.findViewById(R.id.error_msg);
         }
 
         void bindView(NetworkState networkState) {
             if (networkState != null && networkState.getStatus() == NetworkState.Status.RUNNING) {
-                binding.progressBar.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.VISIBLE);
             } else {
-                binding.progressBar.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
             }
 
             if (networkState != null && networkState.getStatus() == NetworkState.Status.FAILED) {
-                binding.errorMsg.setVisibility(View.VISIBLE);
-                binding.errorMsg.setText(networkState.getMsg());
+                errorMsg.setVisibility(View.VISIBLE);
+                errorMsg.setText(networkState.getMsg());
             } else {
-                binding.errorMsg.setVisibility(View.GONE);
+                errorMsg.setVisibility(View.GONE);
             }
         }
     }
