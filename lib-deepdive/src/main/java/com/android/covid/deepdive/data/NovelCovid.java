@@ -60,4 +60,7 @@ public class NovelCovid {
     @SerializedName("criticalPerOneMillion")
     public double criticalPerOneMillion;
 
+    @SerializedName("countryInfo")
+    public CovidCountryInfo countryInfo;
+
 }

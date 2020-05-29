@@ -2,7 +2,7 @@ rootProject.name='Covid'
 
 include ':app'
 include ':lib-util'
-include ':lib-base'
+include ':feature-base'
 include ':lib-deepdive'
 include ':feature-home'
 include ':lib-covid-news'
