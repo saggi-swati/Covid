@@ -6,24 +6,24 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.android.covid.model.CountryInfo;
-import com.android.covid.web.CountryDataRepo;
+import com.android.covid.model.Country;
+import com.android.covid.web.CountryRepo;
 
 import java.util.List;
 
 public class CountryViewModel extends AndroidViewModel {
 
-    private MutableLiveData<List<CountryInfo>> mCountryList;
+    private MutableLiveData<List<Country>> mCountryList;
 
     public CountryViewModel(Application app) {
         super(app);
     }
 
     private void fetchCountryList() {
-        mCountryList = CountryDataRepo.getInstance().getCountryList();
+        mCountryList = CountryRepo.getInstance().getCountryList();
     }
 
-    public LiveData<List<CountryInfo>> getCountryList() {
+    public LiveData<List<Country>> getCountryList() {
         if (mCountryList == null || mCountryList.getValue() == null) {
             fetchCountryList();
         }

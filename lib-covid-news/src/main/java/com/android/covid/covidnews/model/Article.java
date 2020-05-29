@@ -6,10 +6,10 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 
-import com.covid.util.Utility;
+import com.covid.util.CovidUtil;
 
 
-public class Article implements Parcelable {
+public class Article{
 
     private static int increment = 0;
 
@@ -24,45 +24,6 @@ public class Article implements Parcelable {
     public Article() {
         id = ++increment;
     }
-
-
-    protected Article(Parcel in) {
-        id = Utility.getRandomNumber();
-        author = in.readString();
-        title = in.readString();
-        description = in.readString();
-        url = in.readString();
-        urlToImage = in.readString();
-        publishedAt = in.readString();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeString(author);
-        dest.writeString(title);
-        dest.writeString(description);
-        dest.writeString(url);
-        dest.writeString(urlToImage);
-        dest.writeString(publishedAt);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Creator<Article> CREATOR = new Creator<Article>() {
-        @Override
-        public Article createFromParcel(Parcel in) {
-            return new Article(in);
-        }
-
-        @Override
-        public Article[] newArray(int size) {
-            return new Article[size];
-        }
-    };
 
     public long getId() {
         return id;

@@ -9,29 +9,28 @@ import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
 import com.android.covid.covidnews.model.Article;
-import com.android.covid.covidnews.web.FeedDataFactory;
-import com.android.covid.covidnews.web.FeedDataSource;
+import com.android.covid.covidnews.web.NewsDataFactory;
+import com.android.covid.covidnews.web.NewsDataSource;
 import com.android.covid.network.NetworkState;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class FeedViewModel extends ViewModel {
+public class NewsViewModel extends ViewModel {
 
-    private Executor executor;
     private LiveData<NetworkState> networkState;
     private LiveData<PagedList<Article>> articleLiveData;
 
-    public FeedViewModel(Application app) {
+    public NewsViewModel(Application app) {
         init();
     }
 
     private void init() {
-        executor = Executors.newFixedThreadPool(5);
+        Executor executor = Executors.newFixedThreadPool(5);
 
-        FeedDataFactory feedDataFactory = new FeedDataFactory();
-        networkState = Transformations.switchMap(feedDataFactory.getMutableLiveData(),
-                FeedDataSource::getNetworkState);
+        NewsDataFactory newsDataFactory = new NewsDataFactory();
+        networkState = Transformations.switchMap(newsDataFactory.getMutableLiveData(),
+                NewsDataSource::getNetworkState);
 
         PagedList.Config pagedListConfig =
                 (new PagedList.Config.Builder())
@@ -39,7 +38,7 @@ public class FeedViewModel extends ViewModel {
                         .setInitialLoadSizeHint(10)
                         .setPageSize(20).build();
 
-        articleLiveData = (new LivePagedListBuilder(feedDataFactory, pagedListConfig))
+        articleLiveData = (new LivePagedListBuilder(newsDataFactory, pagedListConfig))
                 .setFetchExecutor(executor)
                 .build();
     }

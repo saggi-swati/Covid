@@ -4,12 +4,12 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class CovidCountrySearchData {
-    
+public class CovidCountryData {
+
     @SerializedName("paginationMeta")
-    public PaginationMetadata paginationMetadata;
+    public CovidCountryPaginationMetadata covidCountryPaginationMetadata;
     @SerializedName("last_update")
     public String lastUpdate;
     @SerializedName("rows")
-    public List<CovidCountryDetail> rows;
+    public List<CovidCountryInfo> covidCountryInfos;
 }

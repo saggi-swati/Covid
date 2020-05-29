@@ -16,7 +16,7 @@ import com.android.covid.deepdive.R;
 import com.android.covid.deepdive.databinding.DeepDiveFragmentBinding;
 import com.android.covid.deepdive.ui.adapter.DeepDiveAdapter;
 import com.android.covid.deepdive.ui.viewmodel.DeepDiveViewModel;
-import com.android.covid.model.CountryInfo;
+import com.android.covid.model.Country;
 import com.android.covid.ui.BaseFragment;
 import com.android.covid.ui.viewmodel.CountryViewModel;
 
@@ -44,7 +44,7 @@ public class DeepDiveFragment extends BaseFragment implements DeepDiveAdapter.It
     @Override
     protected void initViews(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
         binding = DataBindingUtil.inflate(inflater,
-                R.layout.fragment_dashboard, container, false);
+                R.layout.covid_deep_dive_fragment, container, false);
 
         setUpRecyclerView();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
@@ -84,7 +84,7 @@ public class DeepDiveFragment extends BaseFragment implements DeepDiveAdapter.It
         });
 
         countryDataViewModel.getCountryList().observe(getViewLifecycleOwner(), countryList -> {
-            for (CountryInfo info :
+            for (Country info :
                     countryList) {
                 mCountryList.add(info.countryName);
             }
