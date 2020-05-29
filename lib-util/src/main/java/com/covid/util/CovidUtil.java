@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class Utility {
+public class CovidUtil {
 
     public static String formatDate(String dateString) {
 

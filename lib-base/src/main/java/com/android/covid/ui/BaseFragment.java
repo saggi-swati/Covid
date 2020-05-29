@@ -1,6 +1,5 @@
 package com.android.covid.ui;
 
-import android.app.Application;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,14 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
-import com.android.covid.web.CountryDataRepo;
-import com.android.covid.model.CountryInfo;
-
-import java.util.List;
+import java.util.Objects;
 
 public abstract class BaseFragment extends Fragment {
 
@@ -35,7 +28,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().setTitle(getTitle());
+        requireActivity().setTitle(getTitle());
     }
 
     protected abstract void initViews(@NonNull LayoutInflater inflater, @Nullable ViewGroup container);

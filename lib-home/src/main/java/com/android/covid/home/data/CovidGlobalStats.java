@@ -2,9 +2,6 @@ package com.android.covid.home.data;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * https://corona-virus-stats.herokuapp.com/api/v1/cases/general-stats
- */
 public class CovidGlobalStats {
     @SerializedName("total_cases")
     public String totalCases;

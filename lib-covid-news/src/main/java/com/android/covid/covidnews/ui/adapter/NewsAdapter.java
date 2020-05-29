@@ -14,13 +14,13 @@ import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.covid.covidnews.R;
-import com.android.covid.covidnews.databinding.NewsItemBinding;
+import com.android.covid.covidnews.databinding.CovidNewsItemBinding;
 import com.android.covid.covidnews.model.Article;
 import com.android.covid.databinding.NetworkItemBinding;
 import com.android.covid.network.NetworkState;
 import com.squareup.picasso.Picasso;
 
-public class FeedListAdapter extends PagedListAdapter<Article, RecyclerView.ViewHolder> {
+public class NewsAdapter extends PagedListAdapter<Article, RecyclerView.ViewHolder> {
 
     private static final int TYPE_PROGRESS = 0;
     private static final int TYPE_ITEM = 1;
@@ -28,7 +28,7 @@ public class FeedListAdapter extends PagedListAdapter<Article, RecyclerView.View
     private Context context;
     private NetworkState networkState;
 
-    public FeedListAdapter(Context context) {
+    public NewsAdapter(Context context) {
         super(Article.DIFF_CALLBACK);
         this.context = context;
     }
@@ -42,7 +42,7 @@ public class FeedListAdapter extends PagedListAdapter<Article, RecyclerView.View
             return new NetworkStateItemViewHolder(headerBinding);
 
         } else {
-            NewsItemBinding itemBinding = NewsItemBinding.inflate(layoutInflater, parent, false);
+            CovidNewsItemBinding itemBinding = CovidNewsItemBinding.inflate(layoutInflater, parent, false);
             return new ArticleItemViewHolder(itemBinding);
         }
     }
@@ -89,9 +89,9 @@ public class FeedListAdapter extends PagedListAdapter<Article, RecyclerView.View
 
     public class ArticleItemViewHolder extends RecyclerView.ViewHolder {
 
-        private NewsItemBinding binding;
+        private CovidNewsItemBinding binding;
 
-        ArticleItemViewHolder(NewsItemBinding binding) {
+        ArticleItemViewHolder(CovidNewsItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

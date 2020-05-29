@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="title_home">Home</string>
-    <string name="title_deep_dive">Deep Dive</string>
-    <string name="title_about_covid">About Covid</string>
     <string name="total_cases_header">TOTAL CASES</string>
     <string name="total_recovered_header">Recovered</string>
     <string name="total_deceased_header">Deceased</string>

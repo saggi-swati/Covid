@@ -19,8 +19,8 @@ import com.android.covid.ui.BaseFragment;
 
 import org.jetbrains.annotations.Nullable;
 
-import static com.covid.util.Utility.formatDate;
-import static com.covid.util.Utility.formatPercentString;
+import static com.covid.util.CovidUtil.formatDate;
+import static com.covid.util.CovidUtil.formatPercentString;
 
 
 public class HomeFragment extends BaseFragment {

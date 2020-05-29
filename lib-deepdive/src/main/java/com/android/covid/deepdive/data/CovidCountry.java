@@ -2,9 +2,9 @@ package com.android.covid.deepdive.data;
 
 import com.google.gson.annotations.SerializedName;
 
-public class CovidCountrySearch {
+public class CovidCountry {
 
     @SerializedName("data")
-    public CovidCountrySearchData data;
+    public CovidCountryData data;
 
 }

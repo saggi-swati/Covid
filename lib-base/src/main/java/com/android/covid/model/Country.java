@@ -2,7 +2,7 @@ package com.android.covid.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class CountryInfo {
+public class Country {
 
     @SerializedName("Country")
     public String countryName;

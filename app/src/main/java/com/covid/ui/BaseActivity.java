@@ -21,7 +21,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        BaseActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        BaseActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.covid_base_layout);
 
         setSupportActionBar(binding.bhCollectionToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

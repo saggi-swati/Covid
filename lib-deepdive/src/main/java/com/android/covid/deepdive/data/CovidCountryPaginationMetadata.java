@@ -2,7 +2,7 @@ package com.android.covid.deepdive.data;
 
 import com.google.gson.annotations.SerializedName;
 
-public class PaginationMetadata {
+public class CovidCountryPaginationMetadata {
 
     @SerializedName("currentPage")
     public int currentPage;

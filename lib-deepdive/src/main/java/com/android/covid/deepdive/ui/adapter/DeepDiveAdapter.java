@@ -9,13 +9,13 @@ import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.covid.databinding.NetworkItemBinding;
-import com.android.covid.deepdive.data.CovidCountryDetail;
+import com.android.covid.deepdive.data.CovidCountryInfo;
 import com.android.covid.deepdive.databinding.CountryDetailItemBinding;
 import com.android.covid.network.NetworkState;
 
 import java.util.Objects;
 
-public class DeepDiveAdapter extends PagedListAdapter<CovidCountryDetail, RecyclerView.ViewHolder> {
+public class DeepDiveAdapter extends PagedListAdapter<CovidCountryInfo, RecyclerView.ViewHolder> {
 
     private static final int TYPE_PROGRESS = 0;
     private static final int TYPE_ITEM = 1;
@@ -23,7 +23,7 @@ public class DeepDiveAdapter extends PagedListAdapter<CovidCountryDetail, Recycl
     private NetworkState networkState;
 
     public DeepDiveAdapter() {
-        super(CovidCountryDetail.DIFF_CALLBACK);
+        super(CovidCountryInfo.DIFF_CALLBACK);
     }
 
     @NonNull
@@ -94,7 +94,7 @@ public class DeepDiveAdapter extends PagedListAdapter<CovidCountryDetail, Recycl
             this.binding = binding;
         }
 
-        void bindTo(CovidCountryDetail item) {
+        void bindTo(CovidCountryInfo item) {
 
             binding.countryName
                     .setText(item.countryName);

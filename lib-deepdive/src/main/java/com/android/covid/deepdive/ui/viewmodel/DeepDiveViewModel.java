@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
-import com.android.covid.deepdive.data.CovidCountryDetail;
+import com.android.covid.deepdive.data.CovidCountryInfo;
 import com.android.covid.deepdive.web.repo.CovidDataFactory;
 import com.android.covid.deepdive.web.repo.CovidDataSource;
 import com.android.covid.network.NetworkState;
@@ -18,7 +18,7 @@ import java.util.concurrent.Executors;
 public class DeepDiveViewModel extends ViewModel {
 
     private LiveData<NetworkState> networkState;
-    private LiveData<PagedList<CovidCountryDetail>> allCountryData;
+    private LiveData<PagedList<CovidCountryInfo>> allCountryData;
 
     public DeepDiveViewModel() {
         init();
@@ -47,7 +47,7 @@ public class DeepDiveViewModel extends ViewModel {
         return networkState;
     }
 
-    public LiveData<PagedList<CovidCountryDetail>> getAllCountryData() {
+    public LiveData<PagedList<CovidCountryInfo>> getAllCountryData() {
         return allCountryData;
     }
 }
