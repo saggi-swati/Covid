@@ -6,29 +6,26 @@ import androidx.lifecycle.ViewModel;
 
 import com.android.covid.home.data.NovelCovidDetail;
 import com.android.covid.home.repo.CovidSummaryRepo;
+import com.android.covid.network.State;
 
 public class HomeViewModel extends ViewModel {
 
     private MutableLiveData<NovelCovidDetail> data;
 
-    public LiveData<Boolean> getIsLoading() {
-        return isLoading;
-    }
-
-    private LiveData<Boolean> isLoading;
-
-    public HomeViewModel() {
-        isLoading = CovidSummaryRepo.getInstance().getIsLoading();
-
-        data = new MutableLiveData<>();
-        fetchLatestCovidStats();
-    }
-
     public LiveData<NovelCovidDetail> getCovidSummary() {
+        if (data == null) {
+            data = new MutableLiveData<>();
+        }
+        data = CovidSummaryRepo.getInstance().getCovidSummary();
         return data;
     }
 
     public void fetchLatestCovidStats() {
         data = CovidSummaryRepo.getInstance().getCovidSummary();
     }
+
+    public LiveData<State> getIsLoading() {
+        return CovidSummaryRepo.getInstance().getIsLoading();
+    }
+
 }

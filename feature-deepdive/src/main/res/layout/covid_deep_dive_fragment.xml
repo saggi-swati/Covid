@@ -6,6 +6,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include
+        android:id="@+id/covid_deep_dive_state_layout"
+        layout="@layout/item_network_state" />
+
     <AutoCompleteTextView
         android:id="@+id/search_et"
         android:layout_width="match_parent"

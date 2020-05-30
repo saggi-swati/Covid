@@ -4,10 +4,12 @@ import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.job.JobScheduler;
 import android.content.Context;
+import android.hardware.input.InputManager;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.telephony.TelephonyManager;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,5 +45,10 @@ public class SystemUtils {
     @Nullable
     public static TelephonyManager telephonyManager(@NonNull Context context) {
         return (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+    }
+
+    @Nullable
+    public static InputMethodManager inputMethodManager(@NonNull Context context) {
+        return (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 }

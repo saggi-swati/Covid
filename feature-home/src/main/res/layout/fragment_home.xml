@@ -13,16 +13,8 @@
         android:orientation="vertical"
         tools:context=".feature.home.HomeFragment">
 
-
-        <TextView
-            android:id="@+id/total_case_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="4dp"
-            android:gravity="center"
-            android:text="@string/total_cases_header"
-            android:textSize="16sp" />
+        <include layout="@layout/item_network_state"
+            android:id="@+id/covid_home_network_state"/>
 
         <TextView
             android:id="@+id/total_case_val_tv"

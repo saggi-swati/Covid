@@ -5,19 +5,18 @@ import androidx.lifecycle.ViewModel;
 
 import com.android.covid.deepdive.data.NovelCovid;
 import com.android.covid.deepdive.web.repo.DeepDiveRepo;
+import com.android.covid.network.State;
 
 import java.util.List;
 
 public class DeepDiveViewModel extends ViewModel {
 
-    private LiveData<List<NovelCovid>> data;
-
-    public DeepDiveViewModel() {
-        data = DeepDiveRepo.getInstance().getNovelCovidAllCountryData();
+    public LiveData<State> getIsLoading() {
+        return DeepDiveRepo.getInstance().getIsLoading();
     }
 
     public LiveData<List<NovelCovid>> getNovelCovidAllCountryData() {
-        return data;
+        return DeepDiveRepo.getInstance().getNovelCovidAllCountryData();
     }
 
 }
