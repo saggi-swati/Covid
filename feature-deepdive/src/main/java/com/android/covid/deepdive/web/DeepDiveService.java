@@ -9,7 +9,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public interface CovidAllCountryService {
+public interface DeepDiveService {
 
    @GET("api/v1/cases/countries-search?")
     Call<CovidCountry> getAllCountryData(

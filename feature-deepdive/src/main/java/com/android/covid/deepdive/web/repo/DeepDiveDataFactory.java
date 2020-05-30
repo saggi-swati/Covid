@@ -5,24 +5,24 @@ import androidx.paging.DataSource;
 
 import org.jetbrains.annotations.NotNull;
 
-public class CovidDataFactory extends DataSource.Factory {
+public class DeepDiveDataFactory extends DataSource.Factory {
 
-    private MutableLiveData<CovidDataSource> mutableLiveData;
+    private MutableLiveData<DeepDiveDataSource> mutableLiveData;
 
-    public CovidDataFactory() {
+    public DeepDiveDataFactory() {
         this.mutableLiveData = new MutableLiveData<>();
     }
 
     @NotNull
     @Override
     public DataSource create() {
-        CovidDataSource feedDataSource = new CovidDataSource();
+        DeepDiveDataSource feedDataSource = new DeepDiveDataSource();
         mutableLiveData.postValue(feedDataSource);
         return feedDataSource;
     }
 
 
-    public MutableLiveData<CovidDataSource> getMutableLiveData() {
+    public MutableLiveData<DeepDiveDataSource> getMutableLiveData() {
         return mutableLiveData;
     }
 

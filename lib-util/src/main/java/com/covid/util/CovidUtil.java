@@ -1,5 +1,7 @@
 package com.covid.util;
 
+import android.util.Log;
+
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -12,28 +14,28 @@ import java.util.TimeZone;
 
 public class CovidUtil {
 
+    private static final String TAG = CovidUtil.class.getSimpleName();
+
     public static String formatDate(String dateString) {
+        if (dateString == null || dateString.isEmpty()) return "";
 
-        SimpleDateFormat df = new SimpleDateFormat("MMM, dd yyyy, HH:mm", Locale.ENGLISH);
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
+        inputFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ENGLISH);
 
-        df.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date date = null;
         try {
-            date = df.parse(dateString);
-            df.setTimeZone(TimeZone.getDefault());
-
+            date = inputFormat.parse(dateString);
         } catch (ParseException e) {
-            e.printStackTrace();
+            Log.d(TAG, "formatDate : Exception occurred during parsing - " + e.getMessage());
         }
 
-        return date != null ? df.format(date) : null;
+        return date == null ? "" : outputFormat.format(date);
     }
 
     public static String longToDateFormat(long milliSeconds) {
 
         DateFormat formatter = new SimpleDateFormat("MMM, dd yyyy, HH:mm", Locale.ENGLISH);
-
-        System.out.println(milliSeconds);
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(milliSeconds);
@@ -46,6 +48,7 @@ public class CovidUtil {
     }
 
     public static String formatPercent(double val, double total) {
+        if (total == 0 || val == 0) return "0%";
         double percent = (val * 100) / total;
         return String.format("%s%s",
                 new DecimalFormat("##.00").format(percent), "%");

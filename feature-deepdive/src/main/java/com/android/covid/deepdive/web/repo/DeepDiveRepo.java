@@ -5,7 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 
 import com.android.covid.deepdive.data.NovelCovid;
-import com.android.covid.deepdive.web.CovidAllCountryService;
+import com.android.covid.deepdive.web.DeepDiveService;
 import com.android.covid.retrofit.RetrofitFactory;
 
 import java.util.List;
@@ -14,23 +14,23 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class NovelCovidAllRepo {
+public class DeepDiveRepo {
 
-    private CovidAllCountryService api;
+    private DeepDiveService api;
 
-    private static NovelCovidAllRepo mInstance;
+    private static DeepDiveRepo mInstance;
 
-    public static NovelCovidAllRepo getInstance() {
+    public static DeepDiveRepo getInstance() {
         if (mInstance == null) {
-            mInstance = new NovelCovidAllRepo();
+            mInstance = new DeepDiveRepo();
         }
         return mInstance;
     }
 
-    private NovelCovidAllRepo() {
+    private DeepDiveRepo() {
 
         if (api == null) {
-            api = RetrofitFactory.buildDeepDiveService(CovidAllCountryService.class);
+            api = RetrofitFactory.buildDeepDiveService(DeepDiveService.class);
         }
     }
 
