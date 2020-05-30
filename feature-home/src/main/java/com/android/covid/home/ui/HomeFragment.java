@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.covid.home.R;
@@ -42,7 +42,7 @@ public class HomeFragment extends BaseFragment {
     private View parent;
 
     @Override
-    public View onCreateView(@Nullable LayoutInflater inflater,
+    public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
 
@@ -52,18 +52,16 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initViewModel() {
-        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
     }
 
     @Override
-    protected void initViews(@Nullable LayoutInflater inflater, @Nullable ViewGroup container) {
+    protected void initViews(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
 
         parent = inflater.inflate(R.layout.fragment_home, container, false);
 
         mSwipeRefreshLayout = parent.findViewById(R.id.swipe_refresh_layout);
-        mSwipeRefreshLayout.setOnRefreshListener(() -> {
-            homeViewModel.fetchLatestCovidStats();
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(() -> homeViewModel.fetchLatestCovidStats());
         mTotalCasesTv = parent.findViewById(R.id.total_case_val_tv);
         mTotalCountryTv = parent.findViewById(R.id.total_countries_val_tv);
 

@@ -1,17 +1,13 @@
 package com.android.covid.home.ui.viewmodel;
 
-import android.app.Application;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.android.covid.home.data.NovelCovidDetail;
 import com.android.covid.home.repo.CovidSummaryRepo;
-import com.android.covid.home.repo.persistence.NovelCovidGlobalPersistent;
 
-public class HomeViewModel extends AndroidViewModel {
+public class HomeViewModel extends ViewModel {
 
     private MutableLiveData<NovelCovidDetail> data;
 
@@ -21,8 +17,7 @@ public class HomeViewModel extends AndroidViewModel {
 
     private LiveData<Boolean> isLoading;
 
-    public HomeViewModel(@NonNull Application application) {
-        super(application);
+    public HomeViewModel() {
         isLoading = CovidSummaryRepo.getInstance().getIsLoading();
 
         data = new MutableLiveData<>();
