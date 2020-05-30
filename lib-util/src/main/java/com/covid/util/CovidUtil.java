@@ -53,4 +53,8 @@ public class CovidUtil {
         return String.format("%s%s",
                 new DecimalFormat("##.00").format(percent), "%");
     }
+
+    public static boolean isNullOrEmpty(String s) {
+        return s == null || s.isEmpty();
+    }
 }

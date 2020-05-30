@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +21,7 @@ public class CovidNewsFragment extends BaseFragment {
     private NewsViewModel newsViewModel;
 
     private View parent;
+    private View stateLayout;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -34,6 +36,8 @@ public class CovidNewsFragment extends BaseFragment {
     protected void initViews(@NonNull LayoutInflater inflater,
                              ViewGroup container) {
         parent = inflater.inflate(R.layout.fragment_covid_news, container, false);
+
+        stateLayout = parent.findViewById(R.id.covid_news_state_layout);
         RecyclerView newsFeedRecyclerView = parent.findViewById(R.id.list_feed);
         newsFeedRecyclerView.setLayoutManager(new LinearLayoutManager(getContext().getApplicationContext()));
         adapter = new NewsAdapter(getContext().getApplicationContext());
@@ -42,7 +46,7 @@ public class CovidNewsFragment extends BaseFragment {
 
     @Override
     protected void initViewModel() {
-        newsViewModel = new NewsViewModel(getActivity().getApplication());
+        newsViewModel = new ViewModelProvider(this).get(NewsViewModel.class);
     }
 
     @Override
@@ -51,11 +55,9 @@ public class CovidNewsFragment extends BaseFragment {
     }
 
     private void observeViewModel() {
-        newsViewModel.getArticleLiveData().observe(getViewLifecycleOwner(), pagedList -> {
-            adapter.submitList(pagedList);
-        });
-        newsViewModel.getNetworkState().observe(getViewLifecycleOwner(), networkState -> {
-            adapter.setNetworkState(networkState);
-        });
+        newsViewModel.getArticleLiveData().observe(getViewLifecycleOwner(),
+                pagedList -> adapter.submitList(pagedList));
+        newsViewModel.getNetworkState().observe(getViewLifecycleOwner(),
+                state -> updateState(stateLayout, state));
     }
 }

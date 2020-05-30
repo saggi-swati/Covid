@@ -10,7 +10,7 @@ import androidx.paging.PageKeyedDataSource;
 import com.android.covid.deepdive.data.CovidCountryInfo;
 import com.android.covid.deepdive.data.CovidCountry;
 import com.android.covid.deepdive.web.DeepDiveService;
-import com.android.covid.network.NetworkState;
+import com.android.covid.network.State;
 import com.android.covid.retrofit.RetrofitFactory;
 
 import org.jetbrains.annotations.NotNull;
@@ -25,8 +25,8 @@ public class DeepDiveDataSource extends PageKeyedDataSource<Long, CovidCountryIn
     private static final String TAG = DeepDiveDataSource.class.getSimpleName();
 
 
-    private MutableLiveData<NetworkState> networkState;
-    private MutableLiveData<NetworkState> initialLoading;
+    private MutableLiveData<State> networkState;
+    private MutableLiveData<State> initialLoading;
 
     private static DeepDiveService api;
 
@@ -42,7 +42,7 @@ public class DeepDiveDataSource extends PageKeyedDataSource<Long, CovidCountryIn
     }
 
 
-    public MutableLiveData<NetworkState> getNetworkState() {
+    public MutableLiveData<State> getNetworkState() {
         return networkState;
     }
 
@@ -50,8 +50,8 @@ public class DeepDiveDataSource extends PageKeyedDataSource<Long, CovidCountryIn
     public void loadInitial(@NonNull LoadInitialParams<Long> params,
                             @NonNull LoadInitialCallback<Long, CovidCountryInfo> callback) {
 
-        initialLoading.postValue(NetworkState.LOADING);
-        networkState.postValue(NetworkState.LOADING);
+        initialLoading.postValue(State.LOADING);
+        networkState.postValue(State.LOADING);
 
         api.getAllCountryData(params.requestedLoadSize, 1, "total_cases", "desc")
                 .enqueue(new Callback<CovidCountry>() {
@@ -59,19 +59,19 @@ public class DeepDiveDataSource extends PageKeyedDataSource<Long, CovidCountryIn
                     public void onResponse(@NotNull Call<CovidCountry> call, @NotNull Response<CovidCountry> response) {
                         if (response.isSuccessful() && response.body() != null) {
                             callback.onResult(response.body().data.covidCountryInfos, null, 2L);
-                            initialLoading.postValue(NetworkState.LOADED);
-                            networkState.postValue(NetworkState.LOADED);
+                            initialLoading.postValue(State.SUCCESS);
+                            networkState.postValue(State.SUCCESS);
 
                         } else {
-                            initialLoading.postValue(new NetworkState(NetworkState.Status.FAILED, response.message()));
-                            networkState.postValue(new NetworkState(NetworkState.Status.FAILED, response.message()));
+                            initialLoading.postValue(new State(State.Status.FAILED, response.message()));
+                            networkState.postValue(new State(State.Status.FAILED, response.message()));
                         }
                     }
 
                     @Override
                     public void onFailure(@Nullable Call<CovidCountry> call, @Nullable Throwable t) {
                         String errorMessage = t == null ? "unknown error" : t.getMessage();
-                        networkState.postValue(new NetworkState(NetworkState.Status.FAILED, errorMessage));
+                        networkState.postValue(new State(State.Status.FAILED, errorMessage));
                     }
                 });
     }
@@ -88,7 +88,7 @@ public class DeepDiveDataSource extends PageKeyedDataSource<Long, CovidCountryIn
 
         Log.i(TAG, "Loading Rang " + params.key + " Count " + params.requestedLoadSize);
 
-        networkState.postValue(NetworkState.LOADING);
+        networkState.postValue(State.LOADING);
 
         api.getAllCountryData(params.requestedLoadSize, params.key, "total_cases", "desc").enqueue(new Callback<CovidCountry>() {
             @Override
@@ -96,16 +96,16 @@ public class DeepDiveDataSource extends PageKeyedDataSource<Long, CovidCountryIn
                 if (response.isSuccessful() && response.body() != null) {
                     long nextKey = (params.key == response.body().data.covidCountryPaginationMetadata.totalRecords) ? params.key : params.key + 1;
                     callback.onResult(response.body().data.covidCountryInfos, nextKey);
-                    networkState.postValue(NetworkState.LOADED);
+                    networkState.postValue(State.SUCCESS);
 
                 } else
-                    networkState.postValue(new NetworkState(NetworkState.Status.FAILED, response.message()));
+                    networkState.postValue(new State(State.Status.FAILED, response.message()));
             }
 
             @Override
             public void onFailure(@NotNull Call<CovidCountry> call, @Nullable Throwable t) {
                 String errorMessage = t == null ? "unknown error" : t.getMessage();
-                networkState.postValue(new NetworkState(NetworkState.Status.FAILED, errorMessage));
+                networkState.postValue(new State(State.Status.FAILED, errorMessage));
             }
         });
     }

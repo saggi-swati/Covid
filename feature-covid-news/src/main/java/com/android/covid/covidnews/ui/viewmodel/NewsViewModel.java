@@ -11,17 +11,17 @@ import androidx.paging.PagedList;
 import com.android.covid.covidnews.model.Article;
 import com.android.covid.covidnews.web.NewsDataFactory;
 import com.android.covid.covidnews.web.NewsDataSource;
-import com.android.covid.network.NetworkState;
+import com.android.covid.network.State;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class NewsViewModel extends ViewModel {
 
-    private LiveData<NetworkState> networkState;
+    private LiveData<State> networkState;
     private LiveData<PagedList<Article>> articleLiveData;
 
-    public NewsViewModel(Application app) {
+    public NewsViewModel() {
         init();
     }
 
@@ -44,7 +44,7 @@ public class NewsViewModel extends ViewModel {
     }
 
 
-    public LiveData<NetworkState> getNetworkState() {
+    public LiveData<State> getNetworkState() {
         return networkState;
     }
 

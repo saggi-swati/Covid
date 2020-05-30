@@ -39,6 +39,8 @@ public class HomeFragment extends BaseFragment {
     private TextView mTotalActiveSeriousPercentTv;
     private TextView mTotalActiveMildPercentTv;
 
+    private View stateLayout;
+
     private View parent;
 
     @Override
@@ -60,8 +62,13 @@ public class HomeFragment extends BaseFragment {
 
         parent = inflater.inflate(R.layout.fragment_home, container, false);
 
+        stateLayout = parent.findViewById(R.id.covid_home_network_state);
+
         mSwipeRefreshLayout = parent.findViewById(R.id.swipe_refresh_layout);
-        mSwipeRefreshLayout.setOnRefreshListener(() -> homeViewModel.fetchLatestCovidStats());
+        mSwipeRefreshLayout.setOnRefreshListener(() -> {
+            mSwipeRefreshLayout.setRefreshing(false);
+            homeViewModel.fetchLatestCovidStats();
+        });
         mTotalCasesTv = parent.findViewById(R.id.total_case_val_tv);
         mTotalCountryTv = parent.findViewById(R.id.total_countries_val_tv);
 
@@ -88,8 +95,9 @@ public class HomeFragment extends BaseFragment {
 
     private void observeViewModel() {
         homeViewModel.getCovidSummary().observe(getViewLifecycleOwner(), this::bindData);
-        homeViewModel.getIsLoading().observe(getViewLifecycleOwner(), value ->
-                mSwipeRefreshLayout.setRefreshing(value));
+
+        homeViewModel.getIsLoading().observe(getViewLifecycleOwner(),
+                value -> updateState(stateLayout, value));
     }
 
     private void bindData(@NonNull NovelCovidDetail detail) {
