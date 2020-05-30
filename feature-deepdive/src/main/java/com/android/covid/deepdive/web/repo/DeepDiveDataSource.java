@@ -9,7 +9,7 @@ import androidx.paging.PageKeyedDataSource;
 
 import com.android.covid.deepdive.data.CovidCountryInfo;
 import com.android.covid.deepdive.data.CovidCountry;
-import com.android.covid.deepdive.web.CovidAllCountryService;
+import com.android.covid.deepdive.web.DeepDiveService;
 import com.android.covid.network.NetworkState;
 import com.android.covid.retrofit.RetrofitFactory;
 
@@ -20,21 +20,21 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class CovidDataSource extends PageKeyedDataSource<Long, CovidCountryInfo> {
+public class DeepDiveDataSource extends PageKeyedDataSource<Long, CovidCountryInfo> {
 
-    private static final String TAG = CovidDataSource.class.getSimpleName();
+    private static final String TAG = DeepDiveDataSource.class.getSimpleName();
 
 
     private MutableLiveData<NetworkState> networkState;
     private MutableLiveData<NetworkState> initialLoading;
 
-    private static CovidAllCountryService api;
+    private static DeepDiveService api;
 
 
-    CovidDataSource() {
+    DeepDiveDataSource() {
 
         if (api == null) {
-            api = RetrofitFactory.buildDeepDiveService(CovidAllCountryService.class);
+            api = RetrofitFactory.buildDeepDiveService(DeepDiveService.class);
         }
 
         networkState = new MutableLiveData<>();

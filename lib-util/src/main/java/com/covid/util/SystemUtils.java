@@ -14,28 +14,28 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 public class SystemUtils {
-    @NonNull
+    @Nullable
     public static LocationManager locationManager(@NonNull Context context) {
         return (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
     }
 
-    @NonNull
+    @Nullable
     public static AlarmManager alarmManager(@NonNull Context context) {
         return (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
     }
 
-    @NonNull
+    @Nullable
     public static ConnectivityManager connectivityManager(@NonNull Context context) {
         return (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 
-    @NonNull
+    @Nullable
     public static NotificationManager notificationManager(@NonNull Context context) {
         return (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @NonNull
+    @Nullable
     public static JobScheduler jobScheduler(@NonNull Context context) {
         return (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
     }

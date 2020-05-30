@@ -11,24 +11,24 @@ import android.widget.AutoCompleteTextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.covid.deepdive.R;
 import com.android.covid.deepdive.data.NovelCovid;
-import com.android.covid.deepdive.ui.adapter.NovelCovidAdapter;
-import com.android.covid.deepdive.ui.viewmodel.NovelCovidViewModel;
+import com.android.covid.deepdive.ui.adapter.DeepDiveAdapter;
+import com.android.covid.deepdive.ui.viewmodel.DeepDiveViewModel;
 import com.android.covid.ui.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeepDiveFragment extends BaseFragment implements NovelCovidAdapter.ItemClickListener {
+public class DeepDiveFragment extends BaseFragment implements DeepDiveAdapter.ItemClickListener {
 
-    private NovelCovidAdapter mAdapter;
+    private DeepDiveAdapter mAdapter;
 
-    private NovelCovidViewModel novelCovidViewModel;
+    private DeepDiveViewModel deepDiveViewModel;
 
     private View parent;
 
@@ -96,17 +96,17 @@ public class DeepDiveFragment extends BaseFragment implements NovelCovidAdapter.
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         RecyclerView covidCountryRecyclerView = parent.findViewById(R.id.covid_country_list);
         covidCountryRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new NovelCovidAdapter();
+        mAdapter = new DeepDiveAdapter();
         covidCountryRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
     protected void initViewModel() {
-        novelCovidViewModel = ViewModelProviders.of(this).get(NovelCovidViewModel.class);
+        deepDiveViewModel = new ViewModelProvider(this).get(DeepDiveViewModel.class);
     }
 
     private void observeViewModel() {
-        novelCovidViewModel.getNovelCovidAllCountryData().observe(getViewLifecycleOwner(), covidCountrySearch -> {
+        deepDiveViewModel.getNovelCovidAllCountryData().observe(getViewLifecycleOwner(), covidCountrySearch -> {
             novelCovids.clear();
             novelCovids.addAll(covidCountrySearch);
             mAdapter.setDataSet(novelCovids);
