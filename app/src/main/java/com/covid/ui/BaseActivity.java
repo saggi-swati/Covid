@@ -5,7 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
@@ -29,7 +29,7 @@ public class BaseActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
-        countryDataViewModel = ViewModelProviders.of(this).get(CountryViewModel.class);
+        countryDataViewModel = new ViewModelProvider(this).get(CountryViewModel.class);
         countryDataViewModel.getCountryList();
     }
 
