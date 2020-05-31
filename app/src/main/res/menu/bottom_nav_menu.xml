@@ -12,8 +12,8 @@
         android:title="@string/title_deep_dive" />
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_covid_news"
         android:icon="@drawable/ic_news_black_24dp"
-        android:title="@string/title_about_covid" />
+        android:title="@string/title_covid_news" />
 
 </menu>

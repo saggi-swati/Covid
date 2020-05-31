@@ -2,8 +2,6 @@ package com.covid;
 
 import android.app.Application;
 
-import com.android.covid.home.HomeModule;
-import com.covid.dependencies.home.HomeDependenciesImpl;
 import com.squareup.leakcanary.LeakCanary;
 
 import okhttp3.OkHttpClient;
@@ -46,6 +44,6 @@ public class CovidApplication extends Application {
     }
 
     private static void init() {
-        HomeModule.init(new HomeDependenciesImpl());
+
     }
 }

@@ -2,5 +2,5 @@
 <resources>
     <string name="error_unknown">Unknown error occurred! \n Please try again later</string>
     <string name="error_network">No network connection! \n Please connect to the network</string>
-    <string name="title_about_covid">Covid News</string>
+    <string name="title_covid_news">Covid News</string>
 </resources>

@@ -18,8 +18,8 @@
         tools:layout="@layout/covid_deep_dive_fragment" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_covid_news"
         android:name="com.android.covid.covidnews.ui.CovidNewsFragment"
-        android:label="@string/title_about_covid"
+        android:label="@string/title_covid_news"
         tools:layout="@layout/fragment_covid_news" />
 </navigation>

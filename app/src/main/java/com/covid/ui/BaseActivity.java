@@ -1,22 +1,28 @@
 package com.covid.ui;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
-import com.android.covid.ui.viewmodel.CountryViewModel;
+import com.android.covid.covidnews.ui.CovidNewsFragment;
+import com.android.covid.deepdive.ui.DeepDiveFragment;
+import com.android.covid.home.ui.HomeFragment;
 import com.covid.R;
 import com.covid.databinding.BaseActivityBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class BaseActivity extends AppCompatActivity {
 
-    CountryViewModel countryDataViewModel;
+    FragmentManager fm;
+    Fragment homeFragment;
+    Fragment deepDiveFragment;
+    Fragment covidNewsFragment;
+    Fragment active;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,15 +32,41 @@ public class BaseActivity extends AppCompatActivity {
         setSupportActionBar(binding.bhCollectionToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupWithNavController(binding.navView, navController);
+        binding.navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        countryDataViewModel = new ViewModelProvider(this).get(CountryViewModel.class);
-        countryDataViewModel.getCountryList();
+        homeFragment = new HomeFragment();
+        deepDiveFragment = new DeepDiveFragment();
+        covidNewsFragment = new CovidNewsFragment();
+        fm = getSupportFragmentManager();
+        active = homeFragment;
+
+        fm.beginTransaction().add(R.id.nav_host_layout, covidNewsFragment, HomeFragment.TAG).hide(covidNewsFragment).commit();
+        fm.beginTransaction().add(R.id.nav_host_layout, deepDiveFragment, DeepDiveFragment.TAG).hide(deepDiveFragment).commit();
+        fm.beginTransaction().add(R.id.nav_host_layout, homeFragment, CovidNewsFragment.TAG).commit();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    fm.beginTransaction().hide(active).show(homeFragment).commit();
+                    active = homeFragment;
+                    return true;
+
+                case R.id.navigation_deep_dive:
+                    fm.beginTransaction().hide(active).show(deepDiveFragment).commit();
+                    active = deepDiveFragment;
+                    return true;
+
+                case R.id.navigation_covid_news:
+                    fm.beginTransaction().hide(active).show(covidNewsFragment).commit();
+                    active = covidNewsFragment;
+                    return true;
+            }
+            return false;
+        }
+    };
 }

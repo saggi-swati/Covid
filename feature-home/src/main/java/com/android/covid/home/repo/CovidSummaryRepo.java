@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.android.covid.home.data.NovelCovidDetail;
 import com.android.covid.home.data.NovelCovidGlobalStats;
-import com.android.covid.home.repo.persistence.NovelCovidGlobalPersistent;
 import com.android.covid.home.repo.web.CovidGlobalService;
 import com.android.covid.network.State;
 import com.android.covid.retrofit.RetrofitFactory;
@@ -52,17 +51,14 @@ public class CovidSummaryRepo {
                         isLoading.setValue(State.SUCCESS);
                         if (response.isSuccessful() && response.body() != null) {
                             data.setValue(response.body().globalStats.get(0));
-                            NovelCovidGlobalPersistent
-                                    .get()
-                                    .cacheCovidDetail(response.body().globalStats.get(0));
                         } else
-                            data.setValue(NovelCovidGlobalPersistent.get().getCachedCovidDetail());
+                            isLoading.setValue(new State(State.Status.FAILED, response.message()));
+
                     }
 
                     @Override
                     public void onFailure(@Nullable Call<NovelCovidGlobalStats> call, @Nullable Throwable t) {
                         isLoading.setValue(new State(State.Status.FAILED, t != null ? t.getMessage() : ""));
-                        data.setValue(NovelCovidGlobalPersistent.get().getCachedCovidDetail());
                         if (t != null)
                             t.printStackTrace();
                     }
