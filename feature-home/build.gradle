@@ -41,12 +41,11 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:2.6.2"
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.6.2'
     testImplementation "android.arch.core:core-testing:1.1.1"
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
     implementation project(':feature-base')
+    implementation project(':feature-deepdive')
     implementation project(':lib-util')
 
-
-    testImplementation "org.mockito:mockito-core:2.28.2"
-    testImplementation 'org.hamcrest:hamcrest-library:2.2'
 
 }

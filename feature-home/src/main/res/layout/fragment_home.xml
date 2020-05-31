@@ -5,43 +5,65 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="4dp"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        tools:context=".feature.home.HomeFragment">
+        android:layout_height="match_parent">
 
-        <include layout="@layout/item_network_state"
-            android:id="@+id/covid_home_network_state"/>
-
-        <TextView
-            android:id="@+id/total_case_val_tv"
+        <LinearLayout xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="2dp"
-            android:gravity="center"
-            android:textSize="28sp"
-            android:textStyle="bold" />
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            tools:context=".feature.home.HomeFragment">
 
-        <TextView
-            android:id="@+id/total_countries_val_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="8dp"
-            android:gravity="center" />
+            <include
+                android:id="@+id/covid_home_network_state"
+                layout="@layout/item_network_state"/>
+
+            <TextView
+                android:id="@+id/total_case_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp"
+                android:gravity="center"
+                android:text="@string/total_cases_header"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/total_case_val_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="2dp"
+                android:gravity="center"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/total_countries_val_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center" />
 
 
-        <include
-            android:id="@+id/close_cases_layout"
-            layout="@layout/closed_cases" />
+            <include
+                android:id="@+id/close_cases_layout"
+                layout="@layout/closed_cases" />
 
-        <include
-            android:id="@+id/active_cases_layout"
-            layout="@layout/active_cases" />
+            <include
+                android:id="@+id/active_cases_layout"
+                layout="@layout/active_cases" />
 
-    </LinearLayout>
+            <fragment android:name="com.android.covid.home.ui.CountryDataFragment"
+                android:id="@+id/country_data_fragment"
+                android:layout_margin="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </ScrollView>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

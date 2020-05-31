@@ -18,10 +18,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class BaseActivity extends AppCompatActivity {
 
-    FragmentManager fm;
-    Fragment homeFragment;
-    Fragment deepDiveFragment;
-    Fragment covidNewsFragment;
     Fragment active;
 
     @Override
@@ -30,19 +26,12 @@ public class BaseActivity extends AppCompatActivity {
         BaseActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.covid_base_layout);
 
         setSupportActionBar(binding.bhCollectionToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         binding.navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        homeFragment = new HomeFragment();
-        deepDiveFragment = new DeepDiveFragment();
-        covidNewsFragment = new CovidNewsFragment();
-        fm = getSupportFragmentManager();
+        Fragment homeFragment = new HomeFragment();
         active = homeFragment;
 
-        fm.beginTransaction().add(R.id.nav_host_layout, covidNewsFragment, HomeFragment.TAG).hide(covidNewsFragment).commit();
-        fm.beginTransaction().add(R.id.nav_host_layout, deepDiveFragment, DeepDiveFragment.TAG).hide(deepDiveFragment).commit();
-        fm.beginTransaction().add(R.id.nav_host_layout, homeFragment, CovidNewsFragment.TAG).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.nav_host_layout, homeFragment, HomeFragment.TAG).commit();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -50,20 +39,40 @@ public class BaseActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            FragmentManager fm = getSupportFragmentManager();
+
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    fm.beginTransaction().hide(active).show(homeFragment).commit();
+                    Fragment homeFragment = fm.findFragmentByTag(HomeFragment.TAG);
+                    if (homeFragment == null) {
+                        homeFragment = new HomeFragment();
+                        fm.beginTransaction().hide(active).add(R.id.nav_host_layout, homeFragment, HomeFragment.TAG).commit();
+                    } else
+                        fm.beginTransaction().hide(active).show(homeFragment).commit();
                     active = homeFragment;
+                    setTitle(getString(R.string.title_home));
                     return true;
 
                 case R.id.navigation_deep_dive:
-                    fm.beginTransaction().hide(active).show(deepDiveFragment).commit();
+                    Fragment deepDiveFragment = fm.findFragmentByTag(DeepDiveFragment.TAG);
+                    if (deepDiveFragment == null) {
+                        deepDiveFragment = new DeepDiveFragment();
+                        fm.beginTransaction().hide(active).add(R.id.nav_host_layout, deepDiveFragment, DeepDiveFragment.TAG).commit();
+                    } else
+                        fm.beginTransaction().hide(active).show(deepDiveFragment).commit();
                     active = deepDiveFragment;
+                    setTitle(getString(R.string.title_deep_dive));
                     return true;
 
                 case R.id.navigation_covid_news:
-                    fm.beginTransaction().hide(active).show(covidNewsFragment).commit();
+                    Fragment covidNewsFragment = fm.findFragmentByTag(CovidNewsFragment.TAG);
+                    if (covidNewsFragment == null) {
+                        covidNewsFragment = new CovidNewsFragment();
+                        fm.beginTransaction().hide(active).add(R.id.nav_host_layout, covidNewsFragment, CovidNewsFragment.TAG).commit();
+                    } else
+                        fm.beginTransaction().hide(active).show(covidNewsFragment).commit();
                     active = covidNewsFragment;
+                    setTitle(getString(R.string.title_covid_news));
                     return true;
             }
             return false;

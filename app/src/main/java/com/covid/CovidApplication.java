@@ -12,7 +12,7 @@ public class CovidApplication extends Application {
 
     OkHttpClient.Builder builder;
 
-    private static volatile CovidApplication sInstance;
+    private static CovidApplication sInstance;
 
     @Override
     public void onCreate() {
@@ -23,7 +23,6 @@ public class CovidApplication extends Application {
             return;
         }
         LeakCanary.install(this);
-
         sInstance = this;
         buildHttpClient();
         init();
@@ -33,6 +32,10 @@ public class CovidApplication extends Application {
         return sInstance;
     }
 
+    private static void init() {
+        // Init modules or dependencies.
+    }
+
 
     public void buildHttpClient() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
@@ -40,10 +43,6 @@ public class CovidApplication extends Application {
 
         builder = new OkHttpClient.Builder();
         builder.addInterceptor(logging);
-
-    }
-
-    private static void init() {
 
     }
 }

@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.android.covid.home.data.NovelCovidDetail;
-import com.android.covid.home.repo.CovidSummaryRepo;
+import com.android.covid.home.web.repo.CovidSummaryRepo;
 import com.android.covid.network.State;
 
 public class HomeViewModel extends ViewModel {

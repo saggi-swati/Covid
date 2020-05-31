@@ -1,4 +1,4 @@
-package com.android.covid.home.repo;
+package com.android.covid.home.web.repo;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.android.covid.home.data.NovelCovidDetail;
 import com.android.covid.home.data.NovelCovidGlobalStats;
-import com.android.covid.home.repo.web.CovidGlobalService;
+import com.android.covid.home.web.CovidGlobalService;
 import com.android.covid.network.State;
 import com.android.covid.retrofit.RetrofitFactory;
 

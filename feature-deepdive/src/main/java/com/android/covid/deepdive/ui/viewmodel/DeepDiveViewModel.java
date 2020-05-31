@@ -19,5 +19,9 @@ public class DeepDiveViewModel extends ViewModel {
         return DeepDiveRepo.getInstance().getNovelCovidAllCountryData();
     }
 
+    public LiveData<NovelCovid> getSpecificCountryData(String currentCountry) {
+        return DeepDiveRepo.getInstance().getCountryData(currentCountry);
+    }
+
 }
 
