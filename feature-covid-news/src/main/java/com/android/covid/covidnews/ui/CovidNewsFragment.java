@@ -17,6 +17,8 @@ import com.android.covid.ui.BaseFragment;
 
 public class CovidNewsFragment extends BaseFragment {
 
+    public static final String TAG = CovidNewsFragment.class.getSimpleName();
+
     private NewsAdapter adapter;
     private NewsViewModel newsViewModel;
 
@@ -51,7 +53,7 @@ public class CovidNewsFragment extends BaseFragment {
 
     @Override
     protected String getTitle() {
-        return getString(R.string.title_about_covid);
+        return getString(R.string.title_covid_news);
     }
 
     private void observeViewModel() {

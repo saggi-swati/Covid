@@ -28,6 +28,8 @@ import java.util.List;
 
 public class DeepDiveFragment extends BaseFragment {
 
+    public static final String TAG = DeepDiveFragment.class.getSimpleName();
+
     private DeepDiveAdapter mAdapter;
 
     private DeepDiveViewModel deepDiveViewModel;

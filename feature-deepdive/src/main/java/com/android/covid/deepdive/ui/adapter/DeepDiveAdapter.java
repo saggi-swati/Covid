@@ -26,7 +26,7 @@ public class DeepDiveAdapter extends RecyclerView.Adapter<DeepDiveAdapter.NovelC
     public NovelCovidViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
 
-        View v = layoutInflater.inflate(R.layout.covid_country_info_item, parent, false);
+        View v = layoutInflater.inflate(R.layout.covid_deep_dive_item, parent, false);
         return new NovelCovidViewHolder(v);
 
     }

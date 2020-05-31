@@ -54,12 +54,14 @@ public abstract class BaseFragment extends Fragment {
         switch (state.getStatus()) {
             case FAILED:
                 assert v != null;
+                v.setVisibility(View.VISIBLE);
                 v.findViewById(R.id.covid_progressbar).setVisibility(View.GONE);
                 v.findViewById(R.id.covid_error_tv).setVisibility(View.VISIBLE);
                 ((TextView) v.findViewById(R.id.covid_error_tv)).setText(state.getMsg());
                 break;
             case LOADING:
                 assert v != null;
+                v.setVisibility(View.VISIBLE);
                 v.findViewById(R.id.covid_progressbar).setVisibility(View.VISIBLE);
                 v.findViewById(R.id.covid_error_tv).setVisibility(View.GONE);
                 break;

@@ -1,22 +1,24 @@
 package com.covid.ui;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
-import com.android.covid.ui.viewmodel.CountryViewModel;
+import com.android.covid.covidnews.ui.CovidNewsFragment;
+import com.android.covid.deepdive.ui.DeepDiveFragment;
+import com.android.covid.home.ui.HomeFragment;
 import com.covid.R;
 import com.covid.databinding.BaseActivityBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class BaseActivity extends AppCompatActivity {
 
-    CountryViewModel countryDataViewModel;
+    Fragment active;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,17 +26,56 @@ public class BaseActivity extends AppCompatActivity {
         BaseActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.covid_base_layout);
 
         setSupportActionBar(binding.bhCollectionToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        binding.navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupWithNavController(binding.navView, navController);
+        Fragment homeFragment = new HomeFragment();
+        active = homeFragment;
 
-        countryDataViewModel = new ViewModelProvider(this).get(CountryViewModel.class);
-        countryDataViewModel.getCountryList();
+        getSupportFragmentManager().beginTransaction().add(R.id.nav_host_layout, homeFragment, HomeFragment.TAG).commit();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            FragmentManager fm = getSupportFragmentManager();
+
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    Fragment homeFragment = fm.findFragmentByTag(HomeFragment.TAG);
+                    if (homeFragment == null) {
+                        homeFragment = new HomeFragment();
+                        fm.beginTransaction().hide(active).add(R.id.nav_host_layout, homeFragment, HomeFragment.TAG).commit();
+                    } else
+                        fm.beginTransaction().hide(active).show(homeFragment).commit();
+                    active = homeFragment;
+                    setTitle(getString(R.string.title_home));
+                    return true;
+
+                case R.id.navigation_deep_dive:
+                    Fragment deepDiveFragment = fm.findFragmentByTag(DeepDiveFragment.TAG);
+                    if (deepDiveFragment == null) {
+                        deepDiveFragment = new DeepDiveFragment();
+                        fm.beginTransaction().hide(active).add(R.id.nav_host_layout, deepDiveFragment, DeepDiveFragment.TAG).commit();
+                    } else
+                        fm.beginTransaction().hide(active).show(deepDiveFragment).commit();
+                    active = deepDiveFragment;
+                    setTitle(getString(R.string.title_deep_dive));
+                    return true;
+
+                case R.id.navigation_covid_news:
+                    Fragment covidNewsFragment = fm.findFragmentByTag(CovidNewsFragment.TAG);
+                    if (covidNewsFragment == null) {
+                        covidNewsFragment = new CovidNewsFragment();
+                        fm.beginTransaction().hide(active).add(R.id.nav_host_layout, covidNewsFragment, CovidNewsFragment.TAG).commit();
+                    } else
+                        fm.beginTransaction().hide(active).show(covidNewsFragment).commit();
+                    active = covidNewsFragment;
+                    setTitle(getString(R.string.title_covid_news));
+                    return true;
+            }
+            return false;
+        }
+    };
 }

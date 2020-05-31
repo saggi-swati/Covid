@@ -64,6 +64,31 @@ public class DeepDiveRepo {
         return data;
     }
 
+    public MutableLiveData<NovelCovid> getCountryData(String country) {
+        isLoading.setValue(State.LOADING);
+        final MutableLiveData<NovelCovid> countryData = new MutableLiveData<>();
+
+        api.getCountryData(country).enqueue(
+                new Callback<NovelCovid>() {
+
+                    @Override
+                    public void onResponse(@Nullable Call<NovelCovid> call,
+                                           @NonNull Response<NovelCovid> response) {
+                        isLoading.setValue(State.SUCCESS);
+                        if (response.isSuccessful() && response.body() != null)
+                            countryData.setValue(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(@Nullable Call<NovelCovid> call, @Nullable Throwable t) {
+                        isLoading.setValue(new State(State.Status.FAILED, t != null ? t.getMessage() : ""));
+                        if (t != null)
+                            t.printStackTrace();
+                    }
+                });
+        return countryData;
+    }
+
     public MutableLiveData<State> getIsLoading() {
         return isLoading;
     }

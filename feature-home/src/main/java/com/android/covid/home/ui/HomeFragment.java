@@ -21,6 +21,8 @@ import org.jetbrains.annotations.Nullable;
 
 public class HomeFragment extends BaseFragment {
 
+    public static final String TAG = HomeFragment.class.getSimpleName();
+
     private HomeViewModel homeViewModel;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
