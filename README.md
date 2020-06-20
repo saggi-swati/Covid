@@ -8,7 +8,7 @@ Covid Android application
 * GLOBAL STATISTICS: </br>
       to show global information and home country details.
 * DEEP DIVE: </br>
-      provides detail about all the countries
+      provides detail about all the countriescx
 * COVID NEWS: </br>
       Aims to provide the latest news for COVID-19
 

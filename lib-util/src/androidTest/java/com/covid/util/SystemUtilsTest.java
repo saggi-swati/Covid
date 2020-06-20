@@ -14,7 +14,6 @@ public class SystemUtilsTest {
         return InstrumentationRegistry.getInstrumentation().getTargetContext();
     }
 
-
     @Test
     public void locationManager() {
         assertNotNull(SystemUtils.locationManager(getContext()));

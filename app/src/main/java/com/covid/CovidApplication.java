@@ -2,7 +2,7 @@ package com.covid;
 
 import android.app.Application;
 
-import com.squareup.leakcanary.LeakCanary;
+import com.covid.injection.DaggerAppComponent;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -17,12 +17,6 @@ public class CovidApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return;
-        }
-        LeakCanary.install(this);
         sInstance = this;
         buildHttpClient();
         init();
@@ -32,8 +26,9 @@ public class CovidApplication extends Application {
         return sInstance;
     }
 
-    private static void init() {
+    private void init() {
         // Init modules or dependencies.
+        DaggerAppComponent.builder().bindApplication(this).build().inject(this);
     }
 
 

@@ -9,9 +9,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.android.covid.covidnews.ui.CovidNewsFragment;
-import com.android.covid.deepdive.ui.DeepDiveFragment;
-import com.android.covid.home.ui.HomeFragment;
+import com.android.covid.covidnews.view.CovidNewsFragment;
+import com.android.covid.deepdive.view.DeepDiveFragment;
+import com.android.covid.home.view.HomeFragment;
 import com.covid.R;
 import com.covid.databinding.BaseActivityBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -22,6 +22,7 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         BaseActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.covid_base_layout);
 
