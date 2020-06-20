@@ -58,7 +58,7 @@
                 android:id="@+id/active_cases_layout"
                 layout="@layout/active_cases" />
 
-            <fragment android:name="com.android.covid.home.ui.CountryDataFragment"
+            <fragment android:name="com.android.covid.home.view.CountryDataFragment"
                 android:id="@+id/country_data_fragment"
                 android:layout_margin="8dp"
                 android:layout_width="match_parent"
